@@ -61,4 +61,3 @@ Column name for prompts ids
 
 
 **NOTE:** there is [link](https://github.com/marcbuils/gulp-i18n-gspreadsheet) to alternative version of such gulp plugin 
-
