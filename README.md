@@ -3,6 +3,10 @@
 [![Build Status](https://travis-ci.org/mikhail-angelov/gulp-translations-from-spreadsheet.svg?branch=master)](https://travis-ci.org/mikhail-angelov/gulp-translations-from-spreadsheet)
 
 > Gulp plugin to generate translations json files for angular application from a google spreadsheet
+> **IMPORTANT:** google spreadsheet must have no auth public permissions (e.g.  Anyone with the link can view)
+> and it should be explicitly published using "File > Publish to the web" menu option in the google spreadsheets GUI.
+> as far ar this plugin is based on [node-google-spreadsheet](https://github.com/theoephraim/node-google-spreadsheet)
+> it can be extended to support spreadsheets with authentication
 
 # Install
 

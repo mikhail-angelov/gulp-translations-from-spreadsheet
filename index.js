@@ -19,7 +19,9 @@ function loadSpreadsheet(options, stream) {
     var my_sheet = new GoogleSpreadsheet(options.key);
 
     my_sheet.getRows(options.sheet, function (err, row_data) {
-        console.log('pulled in ' + row_data.length + ' rows', row_data);
+        if (err) {
+            new gutil.PluginError('gulp-translations-from-spreadsheet', err);
+        }
 
         var langs = options.languages;
         var key = options.keyColumn;
