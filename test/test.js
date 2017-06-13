@@ -1,25 +1,45 @@
-var assert = require('assert');
-var es = require('event-stream');
-var plugin = require('../');
+/*const assert = require('assert');*/
 
-describe('gulp-translations-from-spreadsheet', function () {
+import assert from 'assert';
+import StreamFile from '../index';
 
-    it('should load google spreadsheet and create json files', function (done) {
+import path from 'path';
 
-        // Create plugin stream
-        var test = plugin({
-            key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
-            sheet: 1,
-            languages: ['en', 'ru'],
-            keyColumn: 'key'
-        });
+describe('translations-from-spreadsheet', () => {
 
-        // wait for the file to come back out
-        test.once('data', function (file) {
-            var data = file.contents.toString('utf8');
-            assert.equal(file.path, '/en.json');
-            assert.equal(data, '{"hi":"Hello","bye":"Goodbye"}');
-            done();
-        });
+  it('should load google spreadsheet and create message files', async done => {
+
+    const test = StreamFile({
+      key: '1a4MVpRD3D0Q_VdtePwtT9_SFc4MAc4b2qC5CgiPbBOs',
+      sheet: 1,
+      languages: ['en', 'fr'],
+      keyColumn: 'key',
+      type: 'message'
     });
+
+    test.once('data', (file) => {
+      assert.equal(file.path, path.resolve('files/en.json'));
+      done()
+    });
+
+  }).timeout(10000)
+
+  it('should load google spreadsheet and create template files', async done => {
+
+    const test = StreamFile({
+      key: '1a4MVpRD3D0Q_VdtePwtT9_SFc4MAc4b2qC5CgiPbBOs',
+      sheet: 1,
+      languages: ['en', 'fr'],
+      keyColumn: 'key',
+      type: 'template'
+    });
+
+    test.once('data', (file) => {
+      assert.equal(file.path, path.resolve('files/lib/emails/partials/en/agent-created.hbs'));
+      done()
+    });
+
+  }).timeout(20000)
+
+
 });

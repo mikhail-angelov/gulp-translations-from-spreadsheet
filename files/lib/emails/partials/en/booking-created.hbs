@@ -1,0 +1,20 @@
+<p>Hello {{userName}},</p>
+<p>Thank you for booking with {{wname}}!</p>
+<h4>Booking details</h4>
+<div style="margin:0;margin-left:20px;">
+  <b>Booking number: </b> {{bookingNumber}} <br/>
+  <b>Supplier: </b> {{supplier}} <br/>
+  {{# if isCarBooking }}
+  <b>Pickup date: </b> {{startDate}} <br/>
+  <b>Return date: </b> {{endDate}} <br/>
+  {{else}}
+  <b>Check in date: </b> {{startDate}} <br/>
+  <b>Check out date: </b> {{endDate}} <br/>
+  {{/if}}
+</div>
+<p>Please don't hesitate to call us on +27878131400 or send us an email at support@bookeu.com
+if you have any queries.</p>
+<p>
+  Best regards,<br/>
+  The bookEU Team
+</p>

@@ -1,0 +1,24 @@
+<p>Hello,</p>
+<p>Please find attached the invoice for the following booking {{bookingNumber}}</p>
+<div style="margin:0;margin-left:20px;">
+    <b>Booking Number:</b> {{bookingNumber}}<br/>
+    <b>Type:</b> {{bookingType}}<br/>
+    <b>Supplier:</b> {{supplier}}<br/>
+    <b>Country:</b> {{countryCode}}<br/>
+    <b>Traveler Name:</b> {{userFullname}}<br/>
+    {{# if isCarBooking }}
+        <b>Check in date: </b> {{startDate}} <br/>
+        <b>Check out date: </b> {{endDate}} <br/>
+    {{else}}
+        <b>Pickup date: </b> {{startDate}} <br/>
+        <b>Return date: </b> {{endDate}} <br/>
+    {{/if}}
+    <b>Gross Booking:</b> {{grossBooking}}<br/>
+    <b>VAT Value:</b> {{vatValue}}<br/>
+    <b>VAT Paid:</b> {{vatPaid}}<br/>
+</div>
+
+<p>
+    Best regards,<br/>
+    The bookEU Team
+</p>

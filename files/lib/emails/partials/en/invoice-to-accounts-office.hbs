@@ -1,0 +1,19 @@
+<p>Hello,</p>
+<p>
+    Please find attached the invoice for the following booking:
+</p>
+<div style="margin:0;margin-left:20px;">
+  <b>Booking number: </b> {{bookingNumber}} <br/>
+  <b>Supplier: </b> {{supplier}} <br/>
+  {{# if isCarBooking }}
+  <b>Pickup date: </b> {{startDate}} <br/>
+  <b>Return date: </b> {{endDate}} <br/>
+  {{else}}
+  <b>Check in date: </b> {{startDate}} <br/>
+  <b>Check out date: </b> {{endDate}} <br/>
+  {{/if}}
+</div>
+<p>
+  Best regards,<br/>
+  The bookEU Team
+</p>
