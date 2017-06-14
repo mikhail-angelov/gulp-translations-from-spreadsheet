@@ -2,7 +2,7 @@
   "name": "translations-from-spreadsheet",
   "version": "1.0.1",
   "description": "transform google spreadsheet to json files other types",
-  "author": "bookeu",
+  "author": "niraj",
   "files": [
     "index.js"
   ],
