@@ -9,22 +9,26 @@
 # Install
 
 ```
-npm install gulp-translations-from-spreadsheet --save-dev
+npm i translations-from-spreadsheet --save
 ```
 
 # Basic Usage
 
-This code will generate translation json files based on google spreadsheet:
+const optionsMessage = {
+  key: '###',
+  sheet: 1,
+  languages: ['en', 'fr'],
+  keyColumn: 'key',
+  type: 'message'
+};
 
-gulp.task('translations', function () {
-  return translations({
-          key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
-          sheet: 1,
-          languages: ['en', 'ru'],
-          keyColumn: 'key'
-      })
-    .pipe(gulp.dest('./i18n'));
-});
+const optionsTemplate = {
+  key: '###',
+  sheet: 1,
+  languages: ['en', 'fr'],
+  keyColumn: 'key',
+  type: 'template'
+};
 ```
 
 ### Options
@@ -43,17 +47,3 @@ Type: `Number`
 
 Worksheet id
 **NOTE:** IDs start at 1
-
-#### languages
-Type: `Array`
-
-List of languages must match with column names in worksheet
-
-#### keyColumn
-Type: `String`
-
-Column name for prompts ids
-
-
-
-**NOTE:** there is [link](https://github.com/marcbuils/gulp-i18n-gspreadsheet) to alternative version of such gulp plugin 
