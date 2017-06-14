@@ -19,7 +19,8 @@
     "google-spreadsheet": "^1.1.3",
     "lodash": "^4.2.1",
     "through2": "^2.0.0",
-    "vinyl": "^1.1.1"
+    "vinyl": "^1.1.1",
+    "vinyl-fs": "^2.4.4"
   },
   "devDependencies": {
     "mocha": "^2.4.5",
