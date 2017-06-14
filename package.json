@@ -1,6 +1,6 @@
 {
   "name": "translations-from-spreadsheet",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "transform google spreadsheet to json files other types",
   "author": "niraj",
   "files": [
