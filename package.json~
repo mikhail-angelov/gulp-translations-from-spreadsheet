@@ -1,0 +1,41 @@
+{
+  "name": "gulp-translations-from-spreadsheet",
+  "version": "1.0.1",
+  "description": "transform google spreadsheet to angular translations json files",
+  "author": "Mikhail Angelov",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "google",
+    "spreadsheet",
+    "translations",
+    "i18n",
+    "angular"
+  ],
+  "homepage": "https://github.com/mikhail-angelov/gulp-translations-from-spreadsheet",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikhail-angelov/gulp-translations-from-spreadsheet.git"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^1.1.3",
+    "gulp-util": "^3.0.7",
+    "lodash": "^4.2.1",
+    "through2": "^2.0.0",
+    "vinyl": "^1.1.1"
+  },
+  "devDependencies": {
+    "event-stream": "^3.3.2",
+    "mocha": "^2.4.5",
+    "should": "^8.2.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "license": "MIT"
+}

@@ -1,60 +1,99 @@
-var GoogleSpreadsheet = require("google-spreadsheet");
-var through2 = require('through2');
-var _ = require('lodash');
-var File = require('vinyl');
-var gutil = require('gulp-util');
+import GoogleSpreadsheet from 'google-spreadsheet';
+import through2 from 'through2';
+import _ from 'lodash';
+import File from 'vinyl';
+import vfs from 'vinyl-fs';
 
-function createI18nFile(language, content) {
-    return new File({
-        cwd: "/",
-        base: "/",
-        path: "/" + language + '.json',
-        contents: new Buffer(content)
-    });
-}
 
+function createFile(path, content) {
+  return new File({
+    path: path,
+    contents: new Buffer(content)
+  });
+};
 
 function loadSpreadsheet(options, stream) {
-    //https://github.com/theoephraim/node-google-spreadsheet
-    var my_sheet = new GoogleSpreadsheet(options.key);
 
-    my_sheet.getRows(options.sheet, function (err, row_data) {
-        if (err) {
-            new gutil.PluginError('gulp-translations-from-spreadsheet', err);
-        }
+  let mySheetKey = new GoogleSpreadsheet(options.key);
 
-        var langs = options.languages;
-        var key = options.keyColumn;
-        var converted = _.reduce(row_data, function (acc, row) {
-            if (row[key]) {
-                _.each(langs, function (lang) {
-                    acc[lang] = acc[lang] || {};
-                    acc[lang][row[key]] = row[lang];
-                })
-            }
-            return acc;
-        }, {});
-        stream.write(converted);
-    });
-}
+  mySheetKey.getRows(options.sheet, (err, row_data) => {
 
-function gulpI18n(options) {
-
-    if (!options) {
-        var err = new gutil.PluginError('gulp-translations-from-spreadsheet', 'Missing options!');
+    if (err) {
+      throw err;
     }
 
-    var stream = through2.obj(function (content, enc, cb) {
-        var self = this;
-        _.each(content, function (value, key) {
-            var lFile = createI18nFile(key, JSON.stringify(value));
-            self.push(lFile);
-        });
-        cb();
-    });
+    let type = options.type;
+    let langs = options.languages;
+    let key = options.keyColumn;
 
-    loadSpreadsheet(options, stream);
-    return stream;
+    let converted = _.reduce(row_data, (acc, row) => {
+
+      if (row.type === 'message' && type === 'message') {
+        if (row[key]) {
+          _.each(langs, (lang) => {
+            acc[lang] = acc[lang] || {};
+            acc[lang][row[key]] = row[lang];
+          })
+        }
+      }
+
+      else if (row.type === 'template' && type === 'template') {
+
+        if (row[key]) {
+          _.each(langs, (lang) => {
+            acc[lang] = acc[lang] || {};
+            acc[lang][row[key]] = row[lang];
+          })
+        }
+      }
+
+      return acc;
+    }, {});
+    stream.write(converted);
+  });
 }
 
-module.exports = gulpI18n;
+export default function StreamFile(options) {
+
+  if (!options) {
+    throw new Error('Missing options');
+  }
+
+  let stream = through2.obj(function (content, enc, cb) {
+    let self = this;
+
+    _.each(content, function (value, language) {
+      if (options.type === 'template') {
+        _.each(value, (templateVale, templateName) => {
+          self.push(createFile(`lib/emails/partials/${language}/${templateName}`, templateVale))
+        })
+      } else {
+        self.push(createFile(`${language}.json`, JSON.stringify(value)))
+      }
+    });
+
+    cb();
+  });
+
+  loadSpreadsheet(options, stream);
+  return stream.pipe(vfs.dest('./files'));
+}
+
+const optionsMessage = {
+  key: '1a4MVpRD3D0Q_VdtePwtT9_SFc4MAc4b2qC5CgiPbBOs',
+  sheet: 1,
+  languages: ['en', 'fr'],
+  keyColumn: 'key',
+  type: 'message'
+};
+
+const optionsTemplate = {
+  key: '1a4MVpRD3D0Q_VdtePwtT9_SFc4MAc4b2qC5CgiPbBOs',
+  sheet: 1,
+  languages: ['en', 'fr'],
+  keyColumn: 'key',
+  type: 'template'
+};
+
+StreamFile(optionsMessage);
+StreamFile(optionsTemplate);
