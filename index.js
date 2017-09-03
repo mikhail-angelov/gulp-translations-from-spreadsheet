@@ -35,6 +35,7 @@ function loadSpreadsheet(options, stream) {
             return acc;
         }, {});
         stream.write(converted);
+        stream.end();
     });
 }
 
