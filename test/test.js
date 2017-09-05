@@ -3,22 +3,26 @@ var es = require('event-stream');
 var plugin = require('../');
 
 describe('gulp-translations-from-spreadsheet', function () {
+    this.timeout(100000);
 
     it('should load google spreadsheet and create json files', function (done) {
 
         // Create plugin stream
         var test = plugin({
+            // key: '1f1pB75tvaB-JGgQ1dcoDwiiV43k_9e7sj3akoBVVIbQ',
             key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
             sheet: 1,
             languages: ['en', 'ru'],
-            keyColumn: 'key'
+            keyColumn: 'key',
+            firstRow: 0
         });
 
         // wait for the file to come back out
         test.once('data', function (file) {
             var data = file.contents.toString('utf8');
+            console.log('---', data)
             assert.equal(file.path, '/en.json');
-            assert.equal(data, '{"hi":"Hello","bye":"Goodbye"}');
+            assert.equal(data, '{"hi":"Hello","bye":"Goodbye","":""}');
             done();
         });
     });
