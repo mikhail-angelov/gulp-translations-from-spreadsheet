@@ -12,9 +12,8 @@ describe('gulp-translations-from-spreadsheet', function () {
             // key: '1f1pB75tvaB-JGgQ1dcoDwiiV43k_9e7sj3akoBVVIbQ',
             key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
             sheet: 1,
-            languages: ['en', 'ru'],
-            keyColumn: 'key',
-            firstRow: 0
+            colCount: 4,
+            firstRow: 1
         });
 
         // wait for the file to come back out

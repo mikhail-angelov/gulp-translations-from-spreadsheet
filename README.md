@@ -28,18 +28,18 @@ gulp.task('translations', function () {
   return translations({
           key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
           sheet: 1,
-          languages: ['en', 'ru'],
-          keyColumn: 'key'
+          colCount: 4,
+          firstRow: 1
       })
     .pipe(gulp.dest('./i18n'));
 });
 ```
-
+---
 ### Options
-**NOTE:** all options are mandatory
 
 #### key
-Type: `String`
+Type: `String: mandatory`
+> madatory param
 
 Google spreadsheet key.  
 *Example: `https://docs.google.com/spreadsheets/d/1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4/edit?usp=sharing`*
@@ -47,21 +47,20 @@ Google spreadsheet key.
 *`1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4 is a key here`*
 
 #### sheet
-Type: `Number`
+Type: `Number: optional, defult 1`
 
-Worksheet id
-**NOTE:** IDs start at 1
+**NOTE:** Worksheet id,  ids start at 1
 
-#### languages
-Type: `Array`
+#### firstRow
+Type: `Number: optional, defult 1`
 
-List of languages must match with column names in worksheet
+**NOTE:** the index of the first row, start with 1
 
-#### keyColumn
-Type: `String`
+#### colCount
+Type: `Number: optional, default value from spreadsheet`
 
-Column name for prompts ids
+**NOTE:** the number of valuable columns, it's better to specify this number, otherwise, it could be more than you expect
 
-
+---
 
 **NOTE:** there is [link](https://github.com/marcbuils/gulp-i18n-gspreadsheet) to alternative version of such gulp plugin 
