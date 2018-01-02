@@ -3,10 +3,10 @@
 [![Build Status](https://travis-ci.org/mikhail-angelov/gulp-translations-from-spreadsheet.svg?branch=master)](https://travis-ci.org/mikhail-angelov/gulp-translations-from-spreadsheet)
 
 > Gulp plugin to generate translations json files for angular application from a google spreadsheet
-> **IMPORTANT:** google spreadsheet must have no auth public permissions (e.g.  Anyone with the link can view)
+
+> **IMPORTANT:** If you do not want to use a service account, google spreadsheet must have no auth public permissions (e.g.  Anyone with the link can view)
 > and it should be explicitly published using "File > Publish to the web" menu option in the google spreadsheets GUI.
-> as far ar this plugin is based on [node-google-spreadsheet](https://github.com/theoephraim/node-google-spreadsheet)
-> it can be extended to support spreadsheets with authentication
+> this plugin is based on [node-google-spreadsheet](https://github.com/theoephraim/node-google-spreadsheet)
 
 # Install
 
@@ -29,7 +29,11 @@ gulp.task('translations', function () {
           key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
           sheet: 1,
           colCount: 4,
-          firstRow: 1
+          firstRow: 1,
+          private_key_id: 'xxx',
+          private_key: '-----BEGIN PRIVATE KEY-----\xxx\n-----END PRIVATE KEY-----\n',
+          client_email: 'xxx@developer.gserviceaccount.com',
+          client_id: 'xxx.apps.googleusercontent.com'
       })
     .pipe(gulp.dest('./i18n'));
 });
@@ -39,7 +43,6 @@ gulp.task('translations', function () {
 
 #### key
 Type: `String: mandatory`
-> madatory param
 
 Google spreadsheet key.  
 *Example: `https://docs.google.com/spreadsheets/d/1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4/edit?usp=sharing`*
@@ -47,12 +50,12 @@ Google spreadsheet key.
 *`1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4 is a key here`*
 
 #### sheet
-Type: `Number: optional, defult 1`
+Type: `Number: optional, default 1`
 
 **NOTE:** Worksheet id,  ids start at 1
 
 #### firstRow
-Type: `Number: optional, defult 1`
+Type: `Number: optional, default 1`
 
 **NOTE:** the index of the first row, start with 1
 
@@ -60,6 +63,30 @@ Type: `Number: optional, defult 1`
 Type: `Number: optional, default value from spreadsheet`
 
 **NOTE:** the number of valuable columns, it's better to specify this number, otherwise, it could be more than you expect
+
+### The following four options are required if you want to use a service account to authenticate (recommended):
+
+#### private_key_id
+Type: `String: optional`
+
+The Google API private key id to use for authentication.
+
+#### private_key
+Type: `String: optional`
+
+The Google API private key to use for authentication.
+
+**NOTE:** You should never commit your private_key into your git repo. Rather you should use an ENV variable.
+
+#### client_email
+Type: `String: optional`
+
+The Google API email to use for authentication. This account must have read access to the spreadsheet you want to pull the translations from.
+
+#### client_id
+Type: `String: optional`
+
+The Google API client id to use for authentication.
 
 ---
 

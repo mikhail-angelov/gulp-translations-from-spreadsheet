@@ -18,6 +18,12 @@ function loadSpreadsheet(options, cb) {
     //https://github.com/theoephraim/node-google-spreadsheet
     var my_sheet = new GoogleSpreadsheet(options.key);
 
+    // takes service account info
+    if (options.private_key_id) {
+        options.type = 'service_account';
+        my_sheet.useServiceAccountAuth(options, this);
+    }
+
     my_sheet.getInfo(function (err, info) {
         if (err) {
             return cb(err)
@@ -72,13 +78,13 @@ function gulpI18n(options) {
         });
         cb();
     });
-
+    console.log('WAT')
     loadSpreadsheet(options, function (err, data) {
         if (err) {
             new gutil.PluginError('gulp-translations-from-spreadsheet', err);
-            stream.write({err:err});
+            stream.write({ err: err });
         } else {
-             stream.write(data);
+            stream.write(data);
         }
         stream.end();
     });
