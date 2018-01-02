@@ -21,8 +21,15 @@ function loadSpreadsheet(options, cb) {
     // takes service account info
     if (options.private_key_id) {
         options.type = 'service_account';
-        my_sheet.useServiceAccountAuth(options, this);
+        my_sheet.useServiceAccountAuth(options, function () { processSpreadsheet(my_sheet, options, cb) });
+    } else {
+        processSpreadsheet(my_sheet, options, cb)
     }
+
+}
+
+
+function processSpreadsheet(my_sheet, options, cb) {
 
     my_sheet.getInfo(function (err, info) {
         if (err) {
@@ -44,18 +51,40 @@ function loadSpreadsheet(options, cb) {
             if (err) {
                 return cb(err)
             }
-            console.log(row_data[0].value, row_data[1].value)
             var converted = {};
             var langs = [];
+            var commentsColumnIndex;
+
             for (var i = 1; i < colCount; i++) {
-                langs[i] = row_data[i].value;
+                if (options.ignoreCommentsColumn == true && row_data[i].value == 'comments') {
+                    // do nothing
+                    commentsColumnIndex = i;
+                } else {
+                    if(options.warnOnMissingValues && row_data[i].value.length == 0){
+                        console.log('Column is missing key at index ' + i)
+                    }
+                    if(options.errorOnMissingValues && row_data[i].value.length == 0){
+                        throw new Error('Column is missing key at index ' + i);
+                    }
+                    langs[i] = row_data[i].value;
+                }
             }
-            console.log('-', row_data[0].value, langs)
+
             for (var i = firstRow + 1; i < rowCount - 1; i++) {
                 for (var j = 1; j < colCount; j++) {
-                    var lang = langs[j];
-                    converted[lang] = converted[lang] || {}
-                    converted[lang][row_data[(i - 1) * colCount].value] = row_data[(i - 1) * colCount + j].value;
+                    if (options.ignoreCommentsColumn && j == commentsColumnIndex) {
+                        // do nothing
+                    } else {
+                        if(options.warnOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0){
+                            console.log('Cell is missing value at col ' + i + ', row ' + j)
+                        }
+                        if(options.errorOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0){
+                            throw new Error('Cell is missing value at col ' + i + ', row ' + j);
+                        }
+                        var lang = langs[j];
+                        converted[lang] = converted[lang] || {};
+                        converted[lang][row_data[(i - 1) * colCount].value] = row_data[(i - 1) * colCount + j].value;
+                    }
                 }
             }
             return cb(null, converted);
@@ -78,7 +107,7 @@ function gulpI18n(options) {
         });
         cb();
     });
-    console.log('WAT')
+
     loadSpreadsheet(options, function (err, data) {
         if (err) {
             new gutil.PluginError('gulp-translations-from-spreadsheet', err);

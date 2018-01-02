@@ -33,7 +33,10 @@ gulp.task('translations', function () {
           private_key_id: 'xxx',
           private_key: '-----BEGIN PRIVATE KEY-----\xxx\n-----END PRIVATE KEY-----\n',
           client_email: 'xxx@developer.gserviceaccount.com',
-          client_id: 'xxx.apps.googleusercontent.com'
+          client_id: 'xxx.apps.googleusercontent.com',
+          ignoreCommentsColumn: false,
+          warnOnMissingValues: true,
+          errorOnMissingValues: false
       })
     .pipe(gulp.dest('./i18n'));
 });
@@ -52,7 +55,10 @@ Google spreadsheet key.
 #### sheet
 Type: `Number: optional, default 1`
 
-**NOTE:** Worksheet id,  ids start at 1
+**NOTE:** Worksheet id, ids start at 1
+
+### It is recommended that you DELETE all unused rows and columns in your spreadsheet to optimize load time, and only create addition columns and rows when needed.
+### The following two options allow you to specify a custom range of columns and rows if required. 
 
 #### firstRow
 Type: `Number: optional, default 1`
@@ -87,6 +93,21 @@ The Google API email to use for authentication. This account must have read acce
 Type: `String: optional`
 
 The Google API client id to use for authentication.
+
+#### ignoreCommentsColumn
+Type: `Boolean: optional, default false`
+
+If there is a column with the top cell labelled 'comments', this column will be skipped.
+
+#### warnOnMissingValues
+Type: `Boolean: optional, default true`
+
+If there is a column lacking a given value, throw a warning in the console.
+
+#### errorOnMissingValues
+Type: `Boolean: optional, default false`
+
+If there is a column lacking a given value, throw a fatal error and stop the task (recommended).
 
 ---
 
