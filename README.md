@@ -57,7 +57,7 @@ Type: `Number: optional, default 1`
 
 **NOTE:** Worksheet id, ids start at 1
 
-### It is recommended that you DELETE all unused rows and columns in your spreadsheet to optimize load time, and only create addition columns and rows when needed.
+### It is recommended that you DELETE all unused rows and columns in your spreadsheet to optimize load time, and only create additional columns and rows when needed.
 ### The following two options allow you to specify a custom range of columns and rows if required. 
 
 #### firstRow
