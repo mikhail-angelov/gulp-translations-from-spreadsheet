@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "google-spreadsheet": "~2.0.4",
-    "gulp": "^3.9.1",
     "gulp-util": "^3.0.7",
     "lodash": "^4.2.1",
     "through2": "^2.0.0",

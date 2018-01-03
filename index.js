@@ -21,7 +21,12 @@ function loadSpreadsheet(options, cb) {
     // takes service account info
     if (options.private_key_id) {
         options.type = 'service_account';
-        my_sheet.useServiceAccountAuth(options, function () { processSpreadsheet(my_sheet, options, cb) });
+        my_sheet.useServiceAccountAuth({
+            private_key_id: options.private_key_id,
+            private_key: options.private_key,
+            client_email: options.client_email,
+            client_id: options.client_id
+        }, function () { processSpreadsheet(my_sheet, options, cb) });
     } else {
         processSpreadsheet(my_sheet, options, cb)
     }
@@ -60,10 +65,10 @@ function processSpreadsheet(my_sheet, options, cb) {
                     // do nothing
                     commentsColumnIndex = i;
                 } else {
-                    if(options.warnOnMissingValues && row_data[i].value.length == 0){
+                    if (options.warnOnMissingValues && row_data[i].value.length == 0) {
                         console.log('Column is missing key at index ' + i)
                     }
-                    if(options.errorOnMissingValues && row_data[i].value.length == 0){
+                    if (options.errorOnMissingValues && row_data[i].value.length == 0) {
                         throw new Error('Column is missing key at index ' + i);
                     }
                     langs[i] = row_data[i].value;
@@ -75,10 +80,10 @@ function processSpreadsheet(my_sheet, options, cb) {
                     if (options.ignoreCommentsColumn && j == commentsColumnIndex) {
                         // do nothing
                     } else {
-                        if(options.warnOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0){
+                        if (options.warnOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0) {
                             console.log('Cell is missing value at col ' + i + ', row ' + j)
                         }
-                        if(options.errorOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0){
+                        if (options.errorOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0) {
                             throw new Error('Cell is missing value at col ' + i + ', row ' + j);
                         }
                         var lang = langs[j];
