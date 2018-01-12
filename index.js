@@ -75,20 +75,20 @@ function processSpreadsheet(my_sheet, options, cb) {
                 }
             }
 
-            for (var i = firstRow + 1; i < rowCount - 1; i++) {
+            for (var i = firstRow + 1; i < rowCount; i++) {
                 for (var j = 1; j < colCount; j++) {
                     if (options.ignoreCommentsColumn && j == commentsColumnIndex) {
                         // do nothing
                     } else {
-                        if (options.warnOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0) {
+                        if (options.warnOnMissingValues && row_data[(i) * colCount + j].value.length == 0) {
                             console.log('Cell is missing value at col ' + i + ', row ' + j)
                         }
-                        if (options.errorOnMissingValues && row_data[(i - 1) * colCount + j].value.length == 0) {
+                        if (options.errorOnMissingValues && row_data[(i) * colCount + j].value.length == 0) {
                             throw new Error('Cell is missing value at col ' + i + ', row ' + j);
                         }
                         var lang = langs[j];
                         converted[lang] = converted[lang] || {};
-                        converted[lang][row_data[(i - 1) * colCount].value] = row_data[(i - 1) * colCount + j].value;
+                        converted[lang][row_data[(i) * colCount].value] = row_data[(i) * colCount + j].value;
                     }
                 }
             }
