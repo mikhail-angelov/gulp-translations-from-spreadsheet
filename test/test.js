@@ -9,7 +9,6 @@ describe('gulp-translations-from-spreadsheet', function () {
 
         // Create plugin stream
         var test = plugin({
-            // key: '1f1pB75tvaB-JGgQ1dcoDwiiV43k_9e7sj3akoBVVIbQ',
             key: '1cKTLZCglRJkJR_7NGL6vPn1MHdadcLPUOMYjqVKFlB4',
             sheet: 1,
             colCount: 4,
