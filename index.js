@@ -59,6 +59,7 @@ function processSpreadsheet(my_sheet, options, cb) {
             var converted = {};
             var langs = [];
             var commentsColumnIndex;
+            rowCount = rowCount + firstRow + 1;
 
             for (var i = 1; i < colCount; i++) {
                 if (options.ignoreCommentsColumn == true && row_data[i].value == 'comments') {
