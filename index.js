@@ -75,7 +75,7 @@ function processSpreadsheet(my_sheet, options, cb) {
                 }
             }
 
-            for (var i = firstRow + 1; i < rowCount - 1; i++) {
+            for (var i = firstRow + 1; i <= rowCount; i++) {
                 for (var j = 1; j < colCount; j++) {
                     if (options.ignoreCommentsColumn && j == commentsColumnIndex) {
                         // do nothing
