@@ -88,7 +88,11 @@ function processSpreadsheet(my_sheet, options, cb) {
                         }
                         var lang = langs[j];
                         converted[lang] = converted[lang] || {};
-                        converted[lang][row_data[(i - 1) * colCount].value] = row_data[(i - 1) * colCount + j].value;
+                        if(row_data[(i - 1) * colCount + j]){
+                            converted[lang][row_data[(i - 1) * colCount].value] = row_data[(i - 1) * colCount + j].value;
+                        }else{
+                            console.log('cannot get value for(i,j,colCount): ', i, j, colCount)
+                        }
                     }
                 }
             }
