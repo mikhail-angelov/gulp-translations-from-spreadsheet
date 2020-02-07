@@ -2,6 +2,11 @@ var assert = require('assert');
 var es = require('event-stream');
 var plugin = require('../');
 
+const example = `{
+\t"hi": "Hello",
+\t"bye": "Goodbye",
+\t"": ""
+}`
 describe('gulp-translations-from-spreadsheet', function () {
     this.timeout(100000);
 
@@ -20,7 +25,7 @@ describe('gulp-translations-from-spreadsheet', function () {
             var data = file.contents.toString('utf8');
             console.log('---', data)
             assert.equal(file.path, '/en.json');
-            assert.equal(data, '{"hi":"Hello","bye":"Goodbye","":""}');
+            assert.equal(data, example);
             done();
         });
     });

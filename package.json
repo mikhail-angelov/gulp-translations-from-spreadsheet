@@ -1,6 +1,6 @@
 {
   "name": "gulp-translations-from-spreadsheet",
-  "version": "1.3.2",
+  "version": "1.4.2",
   "description": "transform google spreadsheet to angular translations json files",
   "author": "Mikhail Angelov",
   "files": [
@@ -22,7 +22,7 @@
   "dependencies": {
     "google-spreadsheet": "~2.0.4",
     "gulp-util": "^3.0.7",
-    "lodash": "^4.2.1",
+    "lodash": "^4.17.15",
     "through2": "^2.0.0",
     "vinyl": "^1.1.1"
   },
